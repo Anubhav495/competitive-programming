@@ -1,1 +1,96 @@
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+#include <bits/stdc++.h>
+using namespace std;
+#define FAST  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)
+#define ll long long int 
+#define ar array
+int n,q;
+const int mxn=2e5;
+vector<unsigned ll> tree(mxn+1);
+
+unsigned ll sum(int index)
+{
+	index++;
+	ll s=0;
+	while(index>0)
+	{
+		s+=(unsigned ll)tree[index];
+		index-=(index)&(-index);
+	}
+	return s;
+}
+
+void update(int index,ll val)
+{
+	index++;
+	while(index<=n)
+	{
+		tree[index]+=(unsigned ll)val;
+		index+=(index)&(-index);
+	}
+}
+
+void make(int a[])
+{
+	for(int i=0;i<n;i++)
+		update(i,a[i]);
+}
+
+int main()
+{
+	FAST;
+	//#ifndef ONLINE_JUDGE
+	//	freopen("input.txt","r",stdin);
+	//	freopen("output.txt","w",stdout);
+	//#endif
+	//ll testcase;
+	//cin>>testcase;
+	//for(ll t=0;t<testcase;t++)
+	{
+		//int n;
+		cin>>n>>q;
+		int a[n];
+		for(int i=0;i<n;i++)
+		{
+			cin>>a[i];
+		}
+		make(a);
+		while(q--)
+		{
+			int x,y;
+			cin>>x>>y;
+			x-=2;
+			cout<<sum(--y)-sum(x)<<'\n';
+		}
+		
+	}
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
