@@ -1,0 +1,92 @@
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+#include <bits/stdc++.h>
+using namespace std;
+#define FAST  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)
+#define ll long long int 
+#define ar array
+const int mxn=1e5;
+int n;
+int d[mxn];
+vector<ar<int,2>> adj[mxn];
+
+void dij(int node)
+{
+	priority_queue<ar<int,2>,vector<ar<int,2>>,greater<ar<int,2>>> q;//to keep the edges sorted according to weight
+	q.push({0,node});
+	d[0]=0;//distance of node 0 from itself is zero
+	for(int i=1;i<n;i++)
+	{
+		d[i]=INT_MAX;
+	}
+	while(!q.empty())
+	{
+		auto u=q.top();
+		q.pop();
+		if(u[0]>d[u[1]])
+		{
+			continue;
+		}
+		for(auto i:adj[u[1]])
+		{
+			if(d[i[1]]>d[u[1]]+i[0])
+			{
+				d[i[1]]=d[u[1]]+i[0];
+				q.push({d[i[1]],i[1]});
+			}
+		}
+	}
+}
+
+
+int main()
+{
+	FAST;
+	//#ifndef ONLINE_JUDGE
+	//	freopen("input.txt","r",stdin);
+	//	freopen("output.txt","w",stdout);
+	//#endif
+	ll testcase;
+	cin>>testcase;
+	for(ll t=0;t<testcase;t++)
+	{
+		cin>>n;
+		//input as adjacencey list
+		for(int i=0;i<n;i++)
+		{
+			int x,y,weight;
+			cin>>x>>y>>weight;
+			--x,--y;
+			adj[x].push_back({weight,y});
+		}
+		dij(0);
+	}
+		
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
