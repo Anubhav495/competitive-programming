@@ -1,0 +1,55 @@
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+#include <bits/stdc++.h>
+using namespace std;
+#define FAST  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)
+#define ll long long int 
+#define arr array
+//power of 2 ...n&(n-1)==0
+int n;
+const int mxn=1e5;
+vector<int> adj[mxn];
+bool vis[mxn];
+void bfs(int node)
+{
+	vis[node]=true;
+	queue<int> q;
+	q.push(node);
+	while(!q.empty())
+	{
+		int u=q.front();
+		q.pop();
+		for(int i:adj[u])
+		{
+			if(!vis[i])
+			{
+				q.push(i);
+			}
+		}
+	}
+}
+
+int main()
+{
+	FAST;
+	//#ifndef ONLINE_JUDGE
+	//	freopen("input.txt","r",stdin);
+	//	freopen("output.txt","w",stdout);
+	//#endif
+	ll testcase;
+	cin>>testcase;
+	for(ll t=0;t<testcase;t++)
+	{
+		cin>>n;
+		for(int i=0;i<n;i++)
+		{
+			int x,y;
+			cin>>x>>y;
+			--x,--y;
+			adj[x].push_back(y);
+			adj[y].push_back(x);
+		}
+		bfs(0);
+	}
+	return 0;
+}
