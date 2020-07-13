@@ -1,0 +1,76 @@
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+#include <bits/stdc++.h>
+using namespace std;
+#define FAST  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)
+#define ll long long int 
+#define ar array
+
+int n;
+const int mxn =1e5;
+vector<ar<int,2>> adj[mxn];
+int d[mxn];
+
+int main()
+{
+	FAST;
+	//#ifndef ONLINE_JUDGE
+	//	freopen("input.txt","r",stdin);
+	//	freopen("output.txt","w",stdout);
+	//#endif
+	ll testcase;
+	cin>>testcase;
+	for(ll t=0;t<testcase;t++)
+	{
+		cin>>n;
+		for(int i=0;i<n;i++)
+		{
+			int x,y,weight;
+			cin>>x>>y>>weight;
+			--x,--y;
+			adj[x].push_back({weight,y});
+		}
+    // can be used to find negative cycles //
+		for(int i=0;i<n;i++)
+		{
+			for(int j=0;j<n;j++)
+			{
+				for(auto k:adj[j])
+				{
+					if(d[k[1]]>d[j]+k[0])
+					{
+						d[k[1]]=d[j]+k[0];
+					}
+				}
+			}
+		}
+	}
+		
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
