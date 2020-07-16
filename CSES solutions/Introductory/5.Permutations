@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define FAST  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)
+#define ll long long int 
+ 
+//power of 2 ...n&(n-1)==0
+ 
+int main()
+{
+	FAST;
+	//#ifndef ONLINE_JUDGE
+	//	freopen("input.txt","r",stdin);
+	//	freopen("output.txt","w",stdout);
+	//#endif
+	//ll testcase;
+	//cin>>testcase;
+	//for(ll t=0;t<testcase;t++)
+	{	
+		int n;
+		cin>>n;
+		if(n==2||n==3)
+		{
+			cout<<"NO SOLUTION\n";
+			return 0;
+		}
+		if(n==4)
+		{
+			cout<<"2 4 1 3\n";
+			return 0;
+		}
+		int largeste,largestod;
+		if(n%2==0)
+		{
+			largeste=n;
+			largestod=n-1;
+		}
+		else
+		{
+			largeste=n-1;
+			largestod=n;
+		}
+		for(int i=largeste;i>=2;i-=2)
+			cout<<i<<' ';
+		for(int i=largestod;i>=1;i-=2)
+			cout<<i<<' ';
+		cout<<'\n';
+	}
+ 
+}
