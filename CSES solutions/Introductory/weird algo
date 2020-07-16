@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+#define ll long long int
+using namespace std;
+#define ar array
+
+
+int main()
+{
+	//#ifndef ONLINE_JUDGE
+		//freopen("input.txt","r",stdin);
+		//freopen("output.txt","w",stdout);
+	//#endif
+	
+	//int t;
+	//cin>>t;
+	//while(t--)
+	{
+		ll n;
+		cin>>n;
+		cout<<n<<' ';
+		if(n==1)
+			return 0;
+		while(1)
+		{
+			if(n%2==0)
+			{
+				n/=2;
+				cout<<n<<' ';
+			}
+			else
+			{
+				n*=3;
+				n++;
+				cout<<n<<' ';
+			}
+			if(n==1)
+			{
+				break;
+			}
+		}		
+	}
+		
+}
