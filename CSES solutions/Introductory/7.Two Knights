@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+//#define FAST  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)
+#define ll long long int
+ 
+//power of 2 ...n&(n-1)==0
+ 
+int main()
+{
+	//FAST;
+	ll testcase;
+	cin>>testcase;
+	for(ll t=0;t<testcase;t++)
+	{
+		//use long long
+		//donot memeset other than 0 or 1 or -1
+		//segmentation fault-> check for uninitialized global variable or out of bounds
+		//always check for bottle neck (whether original constraints can be reduced by introducing some condition)
+		ll T=t+1;
+		ll total_sq=T*T;
+		ll tot_pos=((total_sq)*(total_sq-1))/2;//total ways of selecting 2 squares from n*n squares
+		ll ans=tot_pos-4*(T-1)*(T-2);//using inclusion exclusion
+		cout<<ans<<'\n';
+		
+	}		
+	return 0;
+}
+ 
