@@ -1,0 +1,148 @@
+#include<bits/stdc++.h>
+#define ll long long int
+using namespace std;
+#define ar array
+#define pb push_back
+
+const int mxn=1002;
+int n,m;
+vector<string> s;
+bool vis[mxn][mxn];
+int d[mxn][mxn];
+pair<int,int> pa[mxn][mxn];
+void bfs(int x,int y,pair<int,int> p)
+{
+	pa[x][y]=p;
+	memset(d,0x3f,sizeof(d));
+	d[x][y]=0;
+	s[x][y]='#';
+	vis[x][y]=true;
+	queue<pair<int,int>> q;
+	q.push(make_pair(x,y));
+	while(!q.empty())
+	{
+		pair<int,int> u=q.front();
+		q.pop();
+		int X=u.first,Y=u.second;
+		if(X+1<n&&!vis[X+1][Y]&&s[X+1][Y]=='.')
+		{
+			if(d[X+1][Y]>d[X][Y]+1)
+			{
+				pa[X+1][Y]={X,Y};
+				d[X+1][Y]=d[X][Y]+1;
+			}
+			vis[X+1][Y]=true;
+			q.push({X+1,Y});
+		}
+		if(Y+1<m&&!vis[X][Y+1]&&s[X][Y+1]=='.')
+		{
+			if(d[X][Y]+1<d[X][Y+1])
+			{
+				d[X][Y+1]=d[X][Y]+1;
+				pa[X][Y+1]={X,Y};
+			}
+			vis[X][Y+1]=true;
+			q.push({X,Y+1});
+		}
+		if(X-1>=0&&!vis[X-1][Y]&&s[X-1][Y]=='.')
+		{
+			if(d[X][Y]+1<d[X-1][Y])
+			{
+				d[X-1][Y]=d[X][Y]+1;
+				pa[X-1][Y]={X,Y};
+			}
+			vis[X-1][Y]=true;
+			q.push({X-1,Y});
+		}
+		if(Y-1>=0&&!vis[X][Y-1]&&s[X][Y-1]=='.')
+		{
+			if(d[X][Y]+1<d[X][Y-1])
+			{
+				d[X][Y-1]=d[X][Y]+1;
+				pa[X][Y-1]={X,Y};
+			}
+			vis[X][Y-1]=true;
+			q.push({X,Y-1});
+		}
+	}
+}
+		
+
+int main()
+{
+	//#ifndef ONLINE_JUDGE
+		//freopen("input.txt","r",stdin);
+		//freopen("output.txt","w",stdout);
+	//#endif
+	
+	//int t;
+	//cin>>t;
+	//while(t--)
+	{
+		cin>>n>>m;
+		for(int i=0;i<n;i++)
+		{
+			string x;
+			cin>>x;
+			s.pb(x);
+		}
+		int startx=0,endx=0,starty=0,endy=0;
+		for(int i=0;i<n;i++)
+		{
+			for(int j=0;j<m;j++)
+			{
+				if(s[i][j]=='A')
+				{
+					s[i][j]='.';
+					startx=i,starty=j;
+				}
+				if(s[i][j]=='B')
+				{
+					s[i][j]='.';
+					endx=i,endy=j;
+				}
+			}
+		}
+		bfs(startx,starty,{-1,-1});
+		//cout<<"2";
+		string out;
+		pair<int,int> prev=pa[endx][endy];
+		if(!vis[endx][endy])
+		{
+			cout<<"NO\n";
+			return 0;
+		}
+		while(1)
+		{
+			if(prev==make_pair(-1,-1))
+			{
+				assert(endx==startx);
+				assert(endy==starty);
+				break;
+			}
+			if(endx-prev.first==0&&endy-prev.second==-1)
+			{
+				out+='L';
+			}
+			else if(endx-prev.first==0&&endy-prev.second==1)
+			{
+				out+='R';
+			}
+			else if(endx-prev.first==-1&&endy-prev.second==0)
+			{
+				out+='U';
+			}
+			else
+			{
+				out+='D';
+			}
+			endx=prev.first,endy=prev.second;
+			prev=pa[endx][endy];
+		}
+		cout<<"YES\n";
+		cout<<out.size()<<'\n';
+		reverse(out.begin(),out.end());
+		cout<<out;		
+	}
+		
+}
