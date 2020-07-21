@@ -1,0 +1,84 @@
+#include<bits/stdc++.h>
+#define ll long long int
+using namespace std;
+#define ar array
+#define pb push_back
+
+const int mxn=2e5+2;
+vector<int> adj[mxn];
+int n,m,d[mxn],pa[mxn];
+bool vis[mxn];
+void bfs(int node)
+{
+	memset(d,0x3f,sizeof(d));
+	d[node]=0;
+	vis[node]=true;
+	pa[node]=-1;
+	queue<int> q;
+	q.push(node);
+	while(!q.empty())
+	{
+		int u=q.front();
+		q.pop();
+		for(auto i:adj[u])
+		{
+			if(!vis[i])
+			{
+				q.push(i);
+				vis[i]=true;
+				if(d[u]+1<d[i])
+				{
+					pa[i]=u;
+					d[i]=d[u]+1;
+				}
+			}
+		}
+	}
+}
+
+int main()
+{
+	//#ifndef ONLINE_JUDGE
+		//freopen("input.txt","r",stdin);
+		//freopen("output.txt","w",stdout);
+	//#endif
+	
+	//int t;
+	//cin>>t;
+	//while(t--)
+	{
+		cin>>n>>m;
+		for(int i=0;i<m;i++)
+		{
+			int x,y;
+			cin>>x>>y;
+			--x,--y;
+			adj[x].pb(y);
+			adj[y].pb(x);
+		}
+		bfs(0);
+		if(!vis[n-1])
+		{
+			cout<<"IMPOSSIBLE\n";
+			return 0;
+		}
+		vector<int> path;
+		path.pb(n-1);
+		int prev=n-1;
+		while(1)
+		{
+			prev=pa[prev];
+			if(prev==-1)
+			{
+				break;
+			}
+			path.pb(prev);
+		}
+		cout<<path.size()<<'\n';
+		reverse(path.begin(),path.end());
+		for(auto i:path)
+		{
+			cout<<i+1<<' ';
+		}
+	}
+}
