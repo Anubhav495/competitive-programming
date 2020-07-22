@@ -1,0 +1,69 @@
+#include<bits/stdc++.h>
+#define ll long long int
+using namespace std;
+#define ar array
+#define pb push_back
+
+const int mxn=500+2;
+int n,m,q;
+ll d[mxn][mxn];
+//vector<int> adj[mxn];
+
+int main()
+{
+	//#ifndef ONLINE_JUDGE
+		//freopen("input.txt","r",stdin);
+		//freopen("output.txt","w",stdout);
+	//#endif
+	
+	//int t;
+	//cin>>t;
+	//while(t--)
+	{
+		
+		cin>>n>>m>>q;
+		memset(d,0x3f,sizeof(d));
+		for(int i=0;i<m;i++)
+		{
+			int x,y,c;
+			cin>>x>>y>>c;
+			--x,--y;
+			d[x][y]=min(d[x][y],(ll)c);
+			d[y][x]=min(d[y][x],(ll)c);
+		}
+		
+		for(int i=0;i<n;i++)
+		{
+			for(int j=0;j<n;j++)
+			{
+				if(i==j)
+				{
+					d[i][j]=0;
+				}
+			}
+		}
+		//flyod warshall
+		for(int k=0;k<n;k++)
+		{
+			for(int i=0;i<n;i++)
+			{
+				for(int j=0;j<n;j++)
+				{
+					d[i][j]=min(d[i][j],d[i][k]+d[k][j]);
+				}
+			}
+		}
+		
+		while(q--)
+		{
+			int a,b;
+			cin>>a>>b;
+			--a,--b;
+			if(d[a][b]>1e18+2)
+				cout<<-1<<'\n';
+			else
+				cout<<d[a][b]<<'\n';
+		}
+	}
+		
+}
