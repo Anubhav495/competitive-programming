@@ -1,0 +1,97 @@
+#include<bits/stdc++.h>
+#define ll long long int
+using namespace std;
+#define ar array
+#define pb push_back
+
+const int mxn=2500+2;
+int n,m,q;
+ll d[mxn];bool vis1[mxn],vis2[mxn];
+vector<pair<int,int>> adj[mxn];
+vector<int> adj2[mxn];
+
+void dfs1(int node)
+{
+	vis1[node]=true;
+	for(auto i:adj2[node])
+	{
+		if(!vis1[i])
+		{
+			dfs1(i);
+		}
+	}
+}
+void dfs2(int node)
+{
+	vis2[node]=true;
+	for(auto i:adj[node])
+	{
+		if(!vis2[i.second])
+		{
+			dfs2(i.second);
+		}
+	}
+}
+int main()
+{
+	//#ifndef ONLINE_JUDGE
+		//freopen("input.txt","r",stdin);
+		//freopen("output.txt","w",stdout);
+	//#endif
+	
+	//int t;
+	//cin>>t;
+	//while(t--)
+	{
+		
+		cin>>n>>m;
+		for(int i=0;i<m;i++)
+		{
+			int x,y,c;
+			cin>>x>>y>>c;
+			--x,--y;
+			adj[x].pb({c,y});
+			adj2[y].pb(x);
+		}
+		memset(d,-0x3f,sizeof(d));
+		//bellman ford
+		d[0]=0;
+		dfs1(n-1);
+		dfs2(0);
+		bool check=0;
+		for(int k=0;k<5*n;k++)
+		{
+			check=0;
+			for(int i=0;i<n;i++)
+			{
+				for(auto j:adj[i])
+				{
+					if(d[j.second]<d[i]+j.first)
+					{
+						if(vis1[j.second]&&vis2[j.second])
+						{
+							check=1;
+						}
+						d[j.second]=max(d[j.second],d[i]+j.first);
+					}
+				}
+			}
+			if(k>=n-1&&check)
+			{
+				cout<<-1;
+				return 0;
+			}
+			
+		}
+		
+		if(d[n-1]>1e14)
+		{
+			cout<<-1;
+		}
+		else
+		{
+			cout<<d[n-1];
+		}
+	}
+		
+}
