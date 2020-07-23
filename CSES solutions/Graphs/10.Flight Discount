@@ -1,0 +1,93 @@
+#include<bits/stdc++.h>
+#define ll long long int
+using namespace std;
+#define ar array
+#define pb push_back
+
+int n,m;
+const int mxn=1e5+2;
+vector<vector<pair<int,int>>> adj,adj1;
+ll d[mxn],d2[mxn];
+void dij(int node)
+{
+	d[node]=0;
+	priority_queue<pair<ll,int> ,vector<pair<ll,int>> ,greater<pair<ll,int>>> q;
+	q.push({0,node});
+	while(!q.empty())
+	{
+		auto u=q.top();
+		q.pop();
+		if(d[u.second]<u.first)
+			continue;
+		for(auto i:adj[u.second])
+		{
+			if(d[i.second]>d[u.second]+i.first)
+			{
+				d[i.second]=d[u.second]+i.first;
+				q.push({d[i.second],i.second});
+			}
+		}
+	}
+}
+void dij1(int node)
+{
+	d2[node]=0;
+	priority_queue<pair<ll,int> ,vector<pair<ll,int>> ,greater<pair<ll,int>>> q;
+	q.push({0,node});
+	while(!q.empty())
+	{
+		auto u=q.top();
+		q.pop();
+		if(d2[u.second]<u.first)
+			continue;
+		for(auto i:adj1[u.second])
+		{
+			if(d2[i.second]>d2[u.second]+i.first)
+			{
+				d2[i.second]=d2[u.second]+i.first;
+				q.push({d2[i.second],i.second});
+			}
+		}
+	}
+}
+
+int main()
+{
+	//#ifndef ONLINE_JUDGE
+		//freopen("input.txt","r",stdin);
+		//freopen("output.txt","w",stdout);
+	//#endif
+	
+	//int t;
+	//cin>>t;
+	//while(t--)
+	{
+		cin>>n>>m;
+		adj=vector<vector<pair<int,int>>> (n);
+		adj1=vector<vector<pair<int,int>>> (n);
+		for(int i=0;i<m;i++)
+		{
+			int x,y,c;
+			cin>>x>>y>>c;
+			--x,--y;
+			adj[x].pb({c,y});
+			adj1[y].pb({c,x});
+		}	
+		memset(d,0x3f,sizeof(d));
+		dij(0);
+		memset(d2,0x3f,sizeof(d2));
+		dij1(n-1);
+		ll ans=1e18;
+		for(int i=0;i<n;i++)
+		{
+			for(auto j:adj[i])
+			{
+				ans=min(ans,d[i]+d2[j.second]+(j.first)/2);
+				//cout<<ans<<'\n';
+			}
+		}
+		cout<<ans<<'\n';
+		
+	}
+		
+}
