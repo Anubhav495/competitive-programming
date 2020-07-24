@@ -1,0 +1,65 @@
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+#include <bits/stdc++.h>
+using namespace std;
+#define FAST  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)
+#define ll long long int 
+#define ar array
+#define pb push_back
+
+const int mxn=1e5+2;
+int p[mxn];
+int n,m;
+ar<ll,3> e[mxn];
+int find(int x)
+{
+	return (x!=p[x])?(p[x]=find(p[x])):x;
+}
+bool join(int a,int b)
+{
+	if((a=find(a))==(b=find(b)))
+	{
+		return false;
+	}
+	p[a]=b;
+	return true;
+}
+
+int main()
+{
+	FAST;
+	//#ifndef ONLINE_JUDGE
+	//	freopen("input.txt","r",stdin);
+	//	freopen("output.txt","w",stdout);
+	//#endif
+	//ll testcase;
+	//cin>>testcase;
+	//for(ll t=0;t<testcase;t++)
+	{
+		cin>>n>>m;
+		for(int i=0;i<m;i++)
+		{
+			cin>>e[i][1]>>e[i][2]>>e[i][0];
+			--e[i][1],--e[i][2];
+		}
+		sort(e,e+m);
+		iota(p,p+n,0);
+		int a1=0;
+		ll a2=0;
+		for(int i=0;i<m;i++)
+		{
+			if(join(e[i][1],e[i][2]))
+			{
+				++a1,a2+=e[i][0];
+			}
+		}
+		if(a1<n-1)
+		{
+			cout<<"IMPOSSIBLE\n";
+		}
+		else
+		{
+			cout<<a2;
+		}				
+	}
+}
