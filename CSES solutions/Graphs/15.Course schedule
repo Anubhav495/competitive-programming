@@ -1,0 +1,69 @@
+#include<bits/stdc++.h>
+#define ll long long int
+using namespace std;
+#define ar array
+#define pb push_back
+
+int n,m;
+const int mxn=2e5+2;
+bool vis[mxn],act[mxn];
+vector<vector<int>> adj;
+vector<int> ans;
+
+void topo(int node)
+{
+	vis[node]=true;
+	act[node]=true;
+	for(auto i:adj[node])
+	{
+		if(act[i])
+		{
+			cout<<"IMPOSSIBLE\n";
+			exit(0);
+		}
+		if(!vis[i])
+		{
+			topo(i);
+		}
+	}
+	act[node]=false;
+	ans.pb(node);
+}
+
+
+int main()
+{
+	// #ifndef ONLINE_JUDGE
+	// 	freopen("input.txt","r",stdin);
+	// 	freopen("outputc.txt","w",stdout);
+	// #endif
+	
+	//int t;
+	//cin>>t;
+	//while(t--)
+	{
+		cin>>n>>m;
+		adj=vector<vector<int>> (n);
+		for(int i=0;i<m;i++)
+		{
+			int x,y;
+			cin>>x>>y;
+			--x,--y;
+			adj[x].pb(y);
+		}
+		for(int i=0;i<n;i++)
+		{
+			if(!vis[i])
+			{
+				topo(i);
+			}
+		}
+		reverse(ans.begin(),ans.end());
+		for(auto i:ans)
+		{
+			cout<<i+1<<' ';
+		}
+		cout<<'\n';
+	}
+		
+}
