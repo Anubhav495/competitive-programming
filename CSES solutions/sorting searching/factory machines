@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define FAST  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)
+#define ll long long int 
+ 
+//power of 2 ...n&(n-1)==0
+ 
+int main()
+{
+	FAST;
+	//#ifndef ONLINE_JUDGE
+	//	freopen("input.txt","r",stdin);
+	//	freopen("output.txt","w",stdout);
+	//#endif
+	 //ll testcase;
+	 //cin>>testcase;
+	 //for(ll t=0;t<testcase;t++)
+	{
+		ll n,t;
+		cin>>n>>t;
+		ll a[n];
+		for(int i=0;i<n;i++)
+		{
+			cin>>a[i];
+		}
+		ll low=1,high=1e18;
+		sort(a,a+n);
+		while(low<=high)
+		{
+			ll mid=(ll)(low+high)/2;
+			unsigned ll min=0;
+			for(int i=0;i<n;i++)
+			{
+				min+=(unsigned ll)((mid)/a[i]);
+			}
+			if(min>=(unsigned ll)t)
+			{
+				high=mid-1;
+			}
+			else
+			{
+				low=mid+1;
+			}
+		}
+		cout<<low<<'\n';
+	}
+	return 0;
+}
