@@ -1,0 +1,37 @@
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+#include <bits/stdc++.h>
+using namespace std;
+#define FAST  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)
+#define ll long long int 
+#define ar array
+#define pb push_back
+#define f(a,b) for(int i=a;i<(b);i++)
+//hash base 177013
+
+double dist(pair<double,double> p)
+{
+	return sqrt((p.first)*(p.first)+(p.second*p.second));
+}
+
+int main()
+{
+	FAST;
+	//#ifndef ONLINE_JUDGE
+	//	freopen("input.txt","r",stdin);
+	//	freopen("output.txt","w",stdout);
+	//#endif
+	//ll testcase;
+	//cin>>testcase;
+	//for(ll t=0;t<testcase;t++)
+	{
+		int n;
+		cin>>n;
+		int a[n];
+		map<int,int> m;
+		f(0,n)cin>>a[i];
+		f(0,n)m[a[i]]++;
+		cout<<m.size();
+							
+	}
+}
