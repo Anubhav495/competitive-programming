@@ -1,0 +1,68 @@
+#include<bits/stdc++.h>
+#define ll long long 
+using namespace std;
+#define ar array
+#define pb push_back
+#define fi(a,b) for(int i=a;i<(b);i++)
+
+const int mxn=1e5;
+int n;
+int pow2[mxn+1];
+int table[21][mxn+1];
+int getmin(int l,int r)
+{
+	int p=pow2[r-l+1];
+	int plen=1<<p;
+	return min(table[p][l],table[p][r-plen+1]);
+}
+
+int main()
+{
+	// #ifndef ONLINE_JUDGE
+	// 	freopen("input.txt","r",stdin);
+	// 	freopen("outputc.txt","w",stdout);
+	// #endif
+	
+	//int t;
+	//cin>>t;
+	//while(t--)
+	{
+		//computing powers of 2
+		int q;
+		cin>>n>>q;
+		int a[n];
+		fi(0,n)cin>>a[i];
+		
+		pow2[1]=0;
+		fi(2,n+1)
+		{
+			pow2[i]=pow2[i/2]+1;
+		}
+		
+		//sparse table
+		// can be used to find range queries of (minimum , maximum, GCD, LCM)
+		for(int i=0;i<21;i++)
+		{
+			for(int j=0;j+(1<<i)<=n;j++)
+			{
+				if(i==0)
+				{
+					table[i][j]=a[j];
+					continue;
+				}
+				table[i][j]=min(table[i-1][j],table[i-1][j+(1<<(i-1))]);
+			}
+		}
+		while(q--)
+		{
+			int x,y;
+			cin>>x>>y;
+			--x,--y;
+			cout<<getmin(x,y)<<'\n';
+			
+		}
+		
+	}
+		
+}
+
