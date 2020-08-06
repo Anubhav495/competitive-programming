@@ -4,17 +4,19 @@ using namespace std;
 #define ar array
 #define pb push_back
 #define fi(a,b) for(int i=a;i<(b);i++)
+#define fj(a,b) for(int j=a;j<(b);j++)
 
-const int mxn=1e5;
-int n;
-int pow2[mxn+1];
-int table[21][mxn+1];
-int getmin(int l,int r)
+const int mxn=1e6+1;
+vector<int> pow2(mxn+1);
+vector<vector<int>> table (mxn+1,vector<int> (22));
+
+int query(int l,int r)
 {
-	int p=pow2[r-l+1];
-	int plen=1<<p;
-	return min(table[p][l],table[p][r-plen+1]);
+	int dist=pow2[r-l+1];
+	int pow=(1<<dist);
+	return min(table[l][dist],table[r-pow+1][dist]);
 }
+
 
 int main()
 {
@@ -27,41 +29,40 @@ int main()
 	//cin>>t;
 	//while(t--)
 	{
-		//computing powers of 2
-		int q;
+		int n,q;
 		cin>>n>>q;
 		int a[n];
 		fi(0,n)cin>>a[i];
 		
+		//max powers of 2 till index i
 		pow2[1]=0;
 		fi(2,n+1)
 		{
 			pow2[i]=pow2[i/2]+1;
 		}
 		
-		//sparse table
-		// can be used to find range queries of (minimum , maximum, GCD, LCM)
-		for(int i=0;i<21;i++)
+		//creating table
+		fj(0,21)
 		{
-			for(int j=0;j+(1<<i)<=n;j++)
+			fi(0,n)
 			{
-				if(i==0)
+				if(j==0)
 				{
-					table[i][j]=a[j];
+					table[i][0]=a[i];
 					continue;
 				}
-				table[i][j]=min(table[i-1][j],table[i-1][j+(1<<(i-1))]);
+				if(i+(1<<j)>n)continue;
+				table[i][j]=min(table[i][j-1],table[i+(1<<(j-1))][j-1]);
 			}
 		}
+		//queries
 		while(q--)
 		{
 			int x,y;
 			cin>>x>>y;
 			--x,--y;
-			cout<<getmin(x,y)<<'\n';
-			
+			cout<<query(x,y)<<'\n';
 		}
-		
 	}
 		
 }
