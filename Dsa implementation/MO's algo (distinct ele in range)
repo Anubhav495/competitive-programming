@@ -1,0 +1,100 @@
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+#include <bits/stdc++.h>
+using namespace std;
+#define FAST  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)
+#define ll long long int 
+#define ar array
+#define pb push_back
+#define fi(a,b) for(int i=a;i<(b);i++)
+#define fj(a,b) for(int j=a;j<(b);j++)
+#define fk(a,b) for(int k=a;k<(b);k++)
+#define lb lower_bound
+#define ub upper_bound
+//hash base 177013
+
+int n,t,N=555;
+const int mxn=1e6+5;
+int a[mxn],ans[mxn],answer=0,cnt[mxn];
+
+struct query
+{
+	int l,r,i;
+} q[1<<20];
+
+void add(int pos)
+{
+	//assert(pos>=0);
+	cnt[a[pos]]++;
+	if(cnt[a[pos]]==1) answer++;
+}
+
+void remove(int pos)
+{
+	//assert(pos>=0);
+	cnt[a[pos]]--;
+	if(cnt[a[pos]]==0) answer--;
+}
+
+int main()
+{
+	FAST;
+	//#ifndef ONLINE_JUDGE
+	//	freopen("input.txt","r",stdin);
+	//	freopen("output.txt","w",stdout);
+	//#endif
+	//ll testcase;
+	//cin>>testcase;
+	//while(testcase--)
+	{
+		cin>>n>>t;;
+		fi(0,n)
+		{
+			cin>>a[i];
+		}
+		fi(0,t)
+		{
+			cin>>q[i].l>>q[i].r;
+			--q[i].l,--q[i].r;
+			q[i].i=i;
+		}
+		sort(q,q+t,[](const query& x,const query& y){
+			if(x.l/N!=y.l/N)
+			{
+				return x.l/N < y.l/N;
+			}
+			return x.r<y.r;
+		});
+		
+		int left=0,right=0;
+		fi(0,t)
+		{
+			int l=q[i].l,r=q[i].r;
+			while(left<l)
+			{
+				remove(left);
+				left++;
+			}
+			while(left>l)
+			{
+				add(left-1);
+				left--;
+			}
+			while(right<=r)
+			{
+				add(right);
+				right++;
+			}
+			while(right>r+1)
+			{
+				remove(right-1);
+				right--;
+			}
+			ans[q[i].i]=answer;
+		}
+		fi(0,t)
+		{
+			cout<<ans[i]<<'\n';
+		}
+	}
+}
