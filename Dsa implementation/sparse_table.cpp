@@ -16,7 +16,16 @@ int query(int l,int r)
 	int pow=(1<<dist);
 	return min(table[l][dist],table[r-pow+1][dist]);
 }
-
+/**
+range sum queries
+long long sum = 0;
+for (int j = 21; j >= 0; j--) {
+    if ((1<<j) <= r-l+1) {
+        sum += st[L][j];
+        L += 1<<j;
+    }
+}
+**/
 
 int main()
 {
