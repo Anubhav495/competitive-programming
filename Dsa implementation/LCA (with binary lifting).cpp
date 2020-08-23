@@ -4,17 +4,17 @@ using namespace std;
 #define ar array
 #define pb push_back
 
+// can be used to make path queries in a tree
+
 const int mxn=2e5+2,ln=21;
 vector<int> a;
 vector<vector<int>> adj;
 int h[mxn],p[mxn][ln+1];
 bool vis[mxn];
-int xor_till[mxn];
 
 void dfs(int node)
 {
 	vis[node]=true;
-	xor_till[node]=xor_till[p[node][0]]^a[node];
 	for(auto i:adj[node])
 	{
 		if(!vis[i])
@@ -92,7 +92,6 @@ int main()
 		}
 		memset(p,0,sizeof(p));
 		fill(h,h+mxn,0);
-		fill(xor_till,xor_till+mxn,0);
 		memset(vis,false,sizeof(vis));
 		dfs(1);
 		
@@ -109,7 +108,6 @@ int main()
 		{
 			int x,y;
 			cin>>x>>y;
-			cout<<(xor_till[x]^xor_till[y]^a[lca(x,y)])<<'\n';
 		}
 	}
 		
