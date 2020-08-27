@@ -20,6 +20,7 @@ using namespace __gnu_pbds;
 //hash base 177013
 
 //finds suffixes of a string sorted in lexicographically sorted order
+//can use radix sort for nlogn complexity
 
 
 int main()
