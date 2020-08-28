@@ -84,8 +84,30 @@ int main()
 		}
 		fi(0,n)
 		{
+			//p[i] starting position of suffix(sorted) at index i 
 			cout<<p[i]<<' ';
 		}
+		// lcp --> longest common prefix 
+		//lcp(i,j) --> lcp of suffix starting a index i and index j
+		vector<int> lcp(n);
+		k=0;
+		fi(0,n-1)
+		{
+			int pi=c[i];
+			int j=p[pi-1];
+			while(s[i+k]==s[j+k]) k++;
+			lcp[pi]=k;
+			k=max(0,k-1);
+		}
+		fi(1,n)
+		{
+			cout<<lcp[i]<<' ';
+		}
+		
+		
+		
+		
+		
 		cout<<'\n';
 	}
 }
