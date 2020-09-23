@@ -16,7 +16,7 @@ void update(int index,int val,int l2=0,int r2=n-1,int ci=0)
 {
 	if(l2==r2)
 	{
-		st[ci].m=val;
+		st[ci].m=max(st[ci].m,val);
 		return ;
 	}
 	int mid=(l2+r2)/2;
@@ -29,7 +29,24 @@ void update(int index,int val,int l2=0,int r2=n-1,int ci=0)
 	st[ci].s=st[2*ci+1].s+st[2*ci+2].s;
 	st[ci].m=min(st[2*ci+1].m,st[2*ci+2].m);
 }
-	
+
+void change(int index,int val,int l2=0,int r2=n-1,int ci=0)
+{
+	if(l2==r2)
+	{
+		st[ci].m=val;
+		return ;
+	}
+	int mid=(l2+r2)/2;
+	if(index<=mid)
+		change(index,val,l2,mid,2*ci+1);
+	else
+	{
+		change(index,val,mid+1,r2,2*ci+2);
+	}
+	st[ci].m=max(st[2*ci+1].m,st[2*ci+2].m);
+}
+
 int query(int l1,int r1,int l2=0,int r2=n-1,int ci=0)
 {
 	if(l1<=l2&&r1>=r2)
