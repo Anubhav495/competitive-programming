@@ -40,12 +40,11 @@ int main()
 	cin>>testcase;
 	for(ll t=0;t<testcase;t++)
 	{
-		cin>>n;
-		for(int i=0;i<n;i++)
+		cin>>n>>m;  /**n=nodes... m=edges**/
+		while(m--)
 		{
 			int x,y;
 			cin>>x>>y;
-			--x,--y;
 			adj[x].push_back(y);
 			adj[y].push_back(x);
 		}
