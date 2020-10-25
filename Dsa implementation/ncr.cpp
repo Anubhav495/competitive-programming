@@ -3,7 +3,7 @@ const int mxn=1e6+3;
 
 ll binpow(ll a,ll b)
 {
-	ll res=1;
+	ll res=1; 
 	while(b)
 	{
 		if(b&1){
@@ -35,6 +35,6 @@ void facto()
 ll ncr(ll a,ll b)
 {
 	//assert(a-b>=0);
+	if(b > a || a < 0 || b < 0)return 0;
 	return (((fact[a]*inv[b])%mod)*inv[a-b]%mod)%mod;
 }
- 
