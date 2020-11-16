@@ -34,6 +34,7 @@ void join(int a,int b)
 	b=p[b];
 	if(a!=b)
 	{
+		// small to large merging
 		if(s[a]<s[b])
 		{
 			swap(a,b);
