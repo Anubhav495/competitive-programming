@@ -60,6 +60,7 @@ int main()
 					table[i][0]=a[i];
 					continue;
 				}
+				// table[i][j] will store the min for subarray starting a i and having length (2^j - 1) basically its dp!
 				if(i+(1<<j)>n)continue;
 				table[i][j]=min(table[i][j-1],table[i+(1<<(j-1))][j-1]);
 			}
