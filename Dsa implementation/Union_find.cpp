@@ -30,8 +30,8 @@ int find(int node)
 
 void join(int a,int b)
 {
-	a=p[a];
-	b=p[b];
+	a=find(a);
+	b=find(b);
 	if(a!=b)
 	{
 		// small to large merging
