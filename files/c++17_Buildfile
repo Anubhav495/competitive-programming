@@ -1,0 +1,96 @@
+{
+    "shell_cmd": "g++ -std=c++17 -Wshadow -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && \"${file_path}/${file_base_name}\" -O2 -Wno-unused-result",
+    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
+    "working_dir": "${file_path}",
+    "selector": "source.c++, source.cpp, source.cc, source.cxx",
+
+    "variants":
+    [
+        {
+            "name": "Fast",
+
+            "linux": {
+                "shell_cmd": "g++ -std=c++17 -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && xterm -e '${file_path}/${file_base_name} && echo && echo Press ENTER to continue && read line && exit'",
+                // "shell_cmd": "g++ -std=c++11 -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && gnome-terminal -e 'bash -c \"${file_path}/${file_base_name}&& echo && echo Press ENTER to continue && read line && exit\"'", // for gnome-terminal
+                // "shell_cmd": "g++ -std=c++11 -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && xterm -e '${file_path}/${file_base_name}; bash'", // for xterm
+                // "shell_cmd": "g++ -std=c++11 -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && xterm -hold -e ${file_path}/${file_base_name}", // for xterm
+                // "shell_cmd": "g++ -std=c++11 -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && konsole --hold -e ${file_path}/./${file_base_name}", // for konsole
+
+            },
+
+            "windows":{
+                "shell_cmd":   "g++ -std=c++17 -Wshadow -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && start cmd /k  $file_base_name -O2 -Wno-unused-result"
+                // "shell_cmd":   "g++ -std=c++11 -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && start \"$file_base_name\" call $file_base_name"
+            },
+
+            "osx":{
+                "shell_cmd": "g++ -std=c++11 -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && xterm -e '${file_path}/${file_base_name} && echo && echo Press ENTER to continue && read line && exit'",
+            },
+
+            "shell": true,
+        },
+        {
+            "name": "Check",
+
+            "linux": {
+                "shell_cmd": "g++ -std=c++17 -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && xterm -e '${file_path}/${file_base_name} && echo && echo Press ENTER to continue && read line && exit'",
+                // "shell_cmd": "g++ -std=c++11 -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && gnome-terminal -e 'bash -c \"${file_path}/${file_base_name}&& echo && echo Press ENTER to continue && read line && exit\"'", // for gnome-terminal
+                // "shell_cmd": "g++ -std=c++11 -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && xterm -e '${file_path}/${file_base_name}; bash'", // for xterm
+                // "shell_cmd": "g++ -std=c++11 -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && xterm -hold -e ${file_path}/${file_base_name}", // for xterm
+                // "shell_cmd": "g++ -std=c++11 -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && konsole --hold -e ${file_path}/./${file_base_name}", // for konsole
+
+            },
+
+            "windows":{
+                "shell_cmd":   "g++ -std=c++17 -Wshadow -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && start cmd /k  $file_base_name -fno-sanitize=address -fno-sanitize=undefined -D_GLIBCXX_DEBUG"
+                // "shell_cmd":   "g++ -std=c++11 -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && start \"$file_base_name\" call $file_base_name"
+            },
+
+            "osx":{
+                "shell_cmd": "g++ -std=c++11 -Wall \"${file}\" -o \"${file_path}/${file_base_name}\" && xterm -e '${file_path}/${file_base_name} && echo && echo Press ENTER to continue && read line && exit'",
+            },
+
+            "shell": true,
+        }
+    ]
+}
+// {
+// 	"shell_cmd": "g++ -std=c++17 -Wshadow -Wall '${file}' -o '${file_path}/${file_base_name}' && '${file_path}/${file_base_name}' -O2 -Wno-unused-result",
+// 	"file_regex": "^(..[^:]):([0-9]+):?([0-9]+)?:? (.)$",
+// 	"working_dir": "${file_path}",
+// 	"selector": "source.c++, source.cpp, source.cc, source.cxx",
+
+// 	"variants":
+// 	[
+// 		{
+// 			"name": "Build Fast",
+//     		"shell_cmd": "g++ -std=c++17 -Wshadow -Wall '${file}' -o '${file_path}/${file_base_name}' && '${file_path}/${file_base_name}' -O2 -Wno-unused-result"
+//     	},
+// 		{
+// 			"name": "Build Check",
+// 			"shell_cmd": "g++ -std=c++17 -Wshadow -Wall -o "%e" "%f" -g -fno-sanitize=address -fno-sanitize=undefined -D_GLIBCXX_DEBUG"
+// 		}
+		
+		// {
+		// 	"name": "Run",
+		// 	"shell_cmd": "\"./a\" < \"${file_path}/in\""
+		// }
+		// ,
+		// {
+		// 	"name": "Run",
+		// 	"shell_cmd": "\"./a\" < \"${file_path}/in.txt\" > \"${file_path}/output.txt\""
+		// }
+		// {
+		// 	"name": "Build and Run I/O",
+		// 	"shell_cmd": "g++ -std=c++17 \"${file}\" -o a && \"./a\"<\"${file_path}/in\""
+		// },
+		// {
+		// 	"name": "Terminal Run",
+		// 	"shell_cmd": "gnome-terminal -- bash -c \"time ./a && echo && echo Press ENTER to EXIT ... && read line && exit\""
+		// },
+		// {
+		// 	"name": "Terminal I/O",
+		// 	"shell_cmd": "gnome-terminal -- bash -c \"time ./a < in && echo && echo Press ENTER to EXIT ... && read line && exit\""
+		// }
+// 	]
+// }
