@@ -105,6 +105,8 @@ public:
 	friend modnum operator / (const modnum& a, const modnum& b) { return modnum(a) /= b; }
 };
 
+using num = modnum<(int)1e9+7>;
+
 void solve()
 {
 	#warning int_is_not_equal_to_Long_Long
