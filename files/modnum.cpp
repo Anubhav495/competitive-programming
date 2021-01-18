@@ -96,6 +96,12 @@ public:
 	modnum& operator /= (const modnum& o) {
 		return *this *= o.inv();
 	}
+	
+	modnum& operator^ (const modnum& e) {
+		if (!e) return Mod(1);
+		Mod r = *this ^ (e / 2); r = r * r;
+		return e&1 ? *this * r : r;
+	}
  
 	friend modnum operator ++ (modnum& a, int) { modnum r = a; ++a; return r; }
 	friend modnum operator -- (modnum& a, int) { modnum r = a; --a; return r; }
@@ -103,9 +109,25 @@ public:
 	friend modnum operator - (const modnum& a, const modnum& b) { return modnum(a) -= b; }
 	friend modnum operator * (const modnum& a, const modnum& b) { return modnum(a) *= b; }
 	friend modnum operator / (const modnum& a, const modnum& b) { return modnum(a) /= b; }
+	friend modnum operator ^ (const modnum& a, const modnum& b) { return modnum(a) ^= b; }
 };
 
 using num = modnum<(int)1e9+7>;
+
+num binpow(num a,int b)
+{
+	num res=1;
+	while(b)
+	{
+		if(b&1)
+		{
+			res=res*a;
+		}
+		a=a*a;
+		b=b>>1;
+	}
+	return res;
+}
 
 void solve()
 {
