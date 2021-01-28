@@ -63,13 +63,6 @@ struct matrix {
         return res;
     }
  
-    matrix pow(int64_t e) const {
-        assert(N == M);
-        if (e == 0) return matrix<T>(N, N, 0, 1);
-        if (e&1) return *this * pow(e - 1);
-        return (*this * *this).pow(e / 2);
-    }
- 
     friend void row_reduce(matrix<T> &m) {
         int rank = 0;
         for (int j = 0; j < m.M && rank < m.N; j++) {
@@ -113,11 +106,43 @@ struct matrix {
 
 using M = matrix<int>;
 
+const int mod=1e9+7;
+
+M binpow(M a,int b)
+{
+    M res(3,3);
+    res[0][0]=res[1][1]=res[2][2]=1;
+    while(b)
+    {
+        if(b&1)
+        {
+            res=res*a;
+            fi(0,3)
+            {
+                fj(0,3)
+                {
+                    res[i][j]%=mod;
+                }
+            }
+        }
+        a=a*a;
+        fi(0,3)
+        {
+            fj(0,3)
+            {
+                a[i][j]%=mod;
+            }
+        }
+        b=b>>1;
+    }
+    return res;
+}
+
 void solve()
 {
     //each operation or equation can be represented by operation matrix
     //and multiplying by that operation matrix means we performed the operation
-
+    
 
 
     
@@ -128,7 +153,7 @@ signed main()
 {
     FAST;
     int tt=1;
-    //cin>>tt;    
+    cin>>tt;    
     while(tt--)
     {
         solve();
