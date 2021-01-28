@@ -55,7 +55,7 @@ struct matrix {
     }
  
     friend std::vector<T> operator * (const matrix<T>& m, const std::vector<T>& v) {
-        assert(m.M == sz(v));
+        assert(m.M == (int)v.size());
         std::vector<T> res(m.N);
         for (int i = 0; i < m.N; i++)
             for (int j = 0; j < m.M; j++)
