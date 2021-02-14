@@ -1,0 +1,7 @@
+[
+	{ "keys": ["ctrl+e"], "command": "toggle_comment", "args": { "block": false } },
+	{ "keys": ["f8"], "command": "build","args": {"variant": "Fast"}},
+	{ "keys": ["f9"], "command": "build","args": {"variant": "Check"}},
+	{ "keys": ["f5"], "command": "build","args": {"variant": "Run"}},
+	{ "keys": ["ctrl+b"], "command": "build","args": {"select": true}}
+]
