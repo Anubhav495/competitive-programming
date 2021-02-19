@@ -98,5 +98,5 @@ fun PrintWriter.solve() {
         // var (a,b) = readLine()!!.trim().split("\\s+".toRegex()).map (String::toInt)
         // var arr=readLine()!!.split(" ").map {it.toInt()} (read array)
         // var(n,a) = readLine()!!.split(' ').map{it.toInt()}
-        
+    }
 }
