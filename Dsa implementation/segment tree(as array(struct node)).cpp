@@ -3,63 +3,89 @@
 using namespace std;
 #define ar array
 
-const int mxn=2e5+2;
-int n,q;
-vector<ll> a(mxn);
+const int mxn=4e5+2;
+const int INF=1e15;
+int n;
 struct node
 {
-	ll s,m,lz;
-} st[1<<19];
+    ll s,m,lz=0,mini;
+} st[1<<20];
 
-
-void update(int index,int val,int l2=0,int r2=n-1,int ci=0)
-{
-	if(l2==r2)
-	{
-		st[ci].m=max(st[ci].m,val);
-		return ;
-	}
-	int mid=(l2+r2)/2;
-	if(index<=mid)
-		update(index,val,l2,mid,2*ci+1);
-	else
-	{
-		update(index,val,mid+1,r2,2*ci+2);
-	}
-	st[ci].s=st[2*ci+1].s+st[2*ci+2].s;
-	st[ci].m=min(st[2*ci+1].m,st[2*ci+2].m);
+void push(int node) {
+    st[node*2+1].m += st[node].lz;
+    st[node*2+2].m += st[node].lz;
+    st[node*2+1].mini += st[node].lz;
+    st[node*2+2].mini += st[node].lz;
+    st[node*2+1].lz += st[node].lz;
+    st[node*2+2].lz += st[node].lz;
+    st[node].lz = 0;
 }
 
-void change(int index,int val,int l2=0,int r2=n-1,int ci=0)
+void rupdate(int l,int r,int val,int l2=0,int r2=n-1,int ci=0)
 {
-	if(l2==r2)
-	{
-		st[ci].m=val;
-		return ;
-	}
-	int mid=(l2+r2)/2;
-	if(index<=mid)
-		change(index,val,l2,mid,2*ci+1);
-	else
-	{
-		change(index,val,mid+1,r2,2*ci+2);
-	}
-	st[ci].m=max(st[2*ci+1].m,st[2*ci+2].m);
+    if(l>r) return ;
+    if(l==l2&&r==r2)
+    {
+        st[ci].m+=val;
+        st[ci].mini+=val;
+        st[ci].lz+=val;
+        return ;
+    }
+    push(ci);
+    int mid=(l2+r2)/2;
+
+    rupdate(l,min(r,mid),val,l2,mid,2*ci+1);
+    rupdate(max(l,mid+1),r,val,mid+1,r2,2*ci+2);
+
+    st[ci].m=max(st[2*ci+1].m,st[2*ci+2].m);
+    st[ci].mini=min(st[2*ci+1].mini,st[2*ci+2].mini);
 }
 
-int query(int l1,int r1,int l2=0,int r2=n-1,int ci=0)
+void update(int l,int r,int val,int l2=0,int r2=n-1,int ci=0)
 {
-	if(l1<=l2&&r1>=r2)
-	{
-		return st[ci].m;
-	}
-	if(l2>r1||r2<l1)
-	{
-		return INT_MAX;
-	}
-	int mid=(l2+r2)/2;
-	
-	return min(query(l1,r1,l2,mid,2*ci+1),query(l1,r1,mid+1,r2,2*ci+2));
+    if(l>r) return ;
+    if(l==l2&&r==r2)
+    {
+        st[ci].m=val;
+        st[ci].mini=val;
+        return ;
+    }
+    int mid=(l2+r2)/2;
+    update(l,min(r,mid),val,l2,mid,2*ci+1);
+    update(max(l,mid+1),r,val,mid+1,r2,2*ci+2);
+
+    st[ci].m=max(st[2*ci+1].m,st[2*ci+2].m);
+    st[ci].mini=min(st[2*ci+1].mini,st[2*ci+2].mini);
+}
+
+int query(int l1,int r1,int type,int l2=0,int r2=n-1,int ci=0)
+{
+    if(l1<=l2&&r1>=r2)
+    {
+        if(type==1)
+            return st[ci].m;
+        else return st[ci].mini;
+    }
+    if(l2>r1||r2<l1)
+    {
+        if(type==1)
+            return -INF;
+        else 
+            return INF;
+    }
+    push(ci);
+    int mid=(l2+r2)/2;
+    if(type==1)
+        return max(query(l1,r1,type,l2,mid,2*ci+1),query(l1,r1,type,mid+1,r2,2*ci+2));
+    else
+        return min(query(l1,r1,type,l2,mid,2*ci+1),query(l1,r1,type,mid+1,r2,2*ci+2));
+}
+
+void build(vector<int> &a) {
+    fi(0,n)
+    {
+        update(i,i,a[i]);
+    }
 }
 int main()
 {
@@ -73,18 +99,18 @@ int main()
 	//while(t--)
 	{
 		cin>>n>>q;
+		vector<int> a(n);
 		for(int i=0;i<n;i++)
 		{
 			cin>>a[i];
-			update(i,a[i]);
-			
 		}
+		build(a);
 		while(q--)
 		{
 			int x,y;
 			cin>>x>>y;
 			// range minimum query
-			cout<<query(--x,--y)<<'\n';
+			cout<<query(--x,--y,type)<<'\n';
 		}
 		
 	}
