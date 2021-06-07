@@ -55,7 +55,7 @@ vector<vector<int>> mul(vector<vector<int>> first,vector<vector<int>> second,int
     return res;
 }
 
-int binpow(vector<vector<int>> base,int m,vector<int> init,int dem)
+int binpow(vector<vector<int>> base,int m,int dem)
 {
     vector<vector<int>> res(dem,vector<int> (dem));
     fi(0,dem)
@@ -71,10 +71,7 @@ int binpow(vector<vector<int>> base,int m,vector<int> init,int dem)
         base=mul(base,base,dem);
         m=m>>1;
     }
-    int val = 0;
-    for(int i=0;i<dem;i++)
-        val=(val+res[0][i]*init[dem-i-1]%mod)%mod;
-    return (val+mod)%mod;
+    return ret;
 }
 
 void solve()
