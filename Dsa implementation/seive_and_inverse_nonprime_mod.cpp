@@ -4,7 +4,7 @@ vector<int> is(mxn,true);
 void seive()
 {
     is[0]=is[1]=false;
-    for(int i=1;i<mxn;i++)
+    for(int i=2;i<mxn;i++)
     {
         for(int j=i*i;j<mxn;j+=i)
         {
